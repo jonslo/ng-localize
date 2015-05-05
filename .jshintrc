@@ -1,0 +1,17 @@
+{
+  "curly": true,
+  "funcscope": true,
+  "globals": {
+    "angular": false
+  },
+  "latedef": "nofunc",
+  "noarg": true,
+  "nonbsp": true,
+  "strict": true,
+  "undef": true,
+  "unused": "vars",
+  "boss": true,
+  "eqnull": true,
+  "browser": true,
+  "jasmine": true
+}
