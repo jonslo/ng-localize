@@ -17,12 +17,11 @@ module.exports = function(config) {
     files: [
       'bower_components/angular/angular.js',
       'bower_components/angular-mocks/angular-mocks.js',
-      // 'build/localization.all.js',
       'source/localizationStorageProvider.js',
       'source/localizationService.js',
       'source/localizationFilter.js',
       'source/localizationDirective.js',
-      'source/*.spec.js'
+      'specs/*.spec.js'
     ],
 
 
