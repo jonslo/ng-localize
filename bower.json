@@ -2,6 +2,19 @@
   "name": "angular-localization",
   "version": "0.0.1",
   "private": true,
+  "homepage": "https://github.com/philipvonbargen/angular-localization",
+  "authors": [{
+    "name": "Philip von Bargen",
+    "email": "philip@philipvonbargen.de",
+    "url": "http://philipvonbargen.de"
+  }],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/philipvonbargen/angular-localization.git"
+  },
+  "license": "MIT",
+  "ignore": [],
+  "main": "dist/localization.all.min.js",
   "dependencies": {
     "angular": "1.3.15"
   },
