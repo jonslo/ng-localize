@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html ng-app="localization-example">
+  <head>
+    <meta charset="utf-8">
+    <title>Angular-Localization</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="vendor.css" media="screen" rel="stylesheet">
+
+    <script src="vendor.js"></script>
+    <script src="../localization.all.min.js"></script>
+    <script>
+      (function() {
+        'use strict';
+
+        angular.module('localization-example', ['localization.filter', 'localization.directive'])
+            .config(function(LocalizationStorageProvider) {
+              LocalizationStorageProvider.add('en', {headline: 'Localize your Angular apps', linkGithub: 'view on Github', changeLanguage: 'Switch language', current: 'Current localization: "{0}", {1}'});
+              LocalizationStorageProvider.add('de', {headline: 'Lokalisiere deine Angular Apps', linkGithub: 'ansehen auf Github', changeLanguage: 'Sprache ändern', current: 'Aktuelle Lokalisierung: "{0}", {1}'});
+            })
+            .controller('exampleController', function($scope, $filter, localize, LocalizationStorage) {
+              var localization = LocalizationStorage.get();
+              $scope.locale = localization.activeId;
+              $scope.variable = 'test1';
+
+              $scope.switchLocalization = function() {
+                LocalizationStorage.set(localization.activeId == 'en' ? 'de' : 'en');
+                $scope.locale = localization.activeId;
+
+                $scope.variable = $scope.variable == 'test1' ? 'test2' : 'test1';
+              };
+            });
+      })();
+    </script>
+  </head>
+  <body ng-controller="exampleController">
+    <div class="site-wrapper">
+      <div class="site-wrapper-inner">
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <h3 class="masthead-brand">Angular-Localization</h3>
+              <nav>
+                <ul class="nav masthead-nav">
+                  <li><a href="https://github.com/philipvonbargen/angular-localization" target="_blank"><localize key="linkGithub"></localize> <sup><i class="glyphicon glyphicon-new-window"></i></sup></a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          <div class="inner cover">
+            <h1 class="cover-heading" localize key="headline"></h1>
+            <p class="lead">Add some nice and crisp description about how Angular-Localization is going to make your life so much better. You will ask yourself how you ever <em>NOT</em> used it before!</p>
+            <p class="lead">
+              <button class="btn btn-lg btn-danger" ng-click="switchLocalization()" localize key="changeLanguage"></button>
+            </p>
+
+
+            <h4>Locale: {{locale}}</h4>
+            <div class="row text-left">
+              <div class="col-md-6">
+                <h4>Directive:</h4>
+                <dl>
+                  <dt>directive:</dt>
+                  <dd>
+                    <localize key="current" vars="[locale, 'test']"></localize>
+                  </dd>
+                  <dt>directive:</dt>
+                  <dd>
+                    <localize key="current"></localize>
+                  </dd>
+                </dl>
+              </div>
+              <div class="col-md-6">
+                <h4>Filter:</h4>
+                <dl>
+                  <dt>filter:</dt>
+                  <dd>{{'current' | localize:locale:variable}}</dd>
+                  <dt>filter:</dt>
+                  <dd>{{'current' | localize}}</dd>
+                </dl>
+              </div>
+            </div>
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p>Licensed under the MIT license.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
