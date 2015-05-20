@@ -4,7 +4,7 @@
   var app = angular.module('localization.directive', ['localization.service']);
 
   app.directive('localize', function LocalizeDirective($compile, $filter,
-      localize) {
+      $sce, $log, localize) {
     return {
       restrict : 'AE',
       link     : function link($scope, elem, attrs) {
@@ -17,7 +17,12 @@
         var renderTemplate = function renderTemplate() {
           var templateArgs = [attrs.key].concat(variables);
           var template = localize.apply(null, templateArgs);
-          elem = elem.text(template);
+
+          if ('localizeHtml' in attrs) {
+            elem = elem.html($sce.getTrustedHtml(template));
+          } else {
+            elem = elem.text(template);
+          }
         };
 
         // watch for updated scope variables
