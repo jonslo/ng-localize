@@ -9,19 +9,20 @@
 
     // default english localizations
     var LOCALIZATIONS_EN = {
-      key : '"{1}" equals "{1}" and "{0}" equals "{0}".',
+      key : '"{1}" equals "{1}" and <i>"{0}"</i> equals <i>"{0}"</i>.',
     };
     var LOCALIZATIONS_DE = {
-      key : '"{1}" gleicht "{1}" und "{0}" gleicht "{0}".',
+      key : '"{1}" gleicht "{1}" und <i>"{0}"</i> gleicht <i>"{0}"</i>.',
     };
 
-    var createTestEnv = function(keyString, varsString) {
+    var createTestEnv = function(keyString, varsString, htmlMode) {
       angular.mock.inject(function($injector) {
         $scope = $injector.get('$rootScope').$new();
 
         element = angular.element(
-          '<localize ng-app key="' + keyString + '" vars="' + varsString +
-              '"></localize>'
+          '<localize ng-app key="' + keyString + '" vars="' + varsString + '"' +
+              (!!htmlMode ? ' localize-html' : '') + // output template as HTML
+              '></localize>'
         );
 
         var $compile = $injector.get('$compile');
@@ -33,6 +34,7 @@
       });
     };
 
+    beforeEach(angular.mock.module('ngSanitize'));
     beforeEach(angular.mock.module('localization.directive'));
     beforeEach(angular.mock.inject(function($injector) {
       LocalizationStorage = $injector.get('LocalizationStorage');
@@ -156,6 +158,26 @@
       $scope.scopeVar2 += '?!';
       $scope.$digest();
       expect(element.innerText).toEqual(localize('key', $scope.scopeVar1,
+          $scope.scopeVar2));
+    });
+
+    it('inserts the template as HTML instead of text if the `localize-html` ' +
+        'attribute is set', function() {
+      $scope.scopeVar1 = 'string 1';
+      $scope.scopeVar2 = 'string 2';
+      createTestEnv('key', '[scopeVar1, scopeVar2]', !!'htmlMode');
+
+      expect(element.innerHTML).toEqual(localize('key', $scope.scopeVar1,
+          $scope.scopeVar2));
+
+      $scope.scopeVar1 += '?!';
+      $scope.$digest();
+      expect(element.innerHTML).toEqual(localize('key', $scope.scopeVar1,
+          $scope.scopeVar2));
+
+      $scope.scopeVar2 += '?!';
+      $scope.$digest();
+      expect(element.innerHTML).toEqual(localize('key', $scope.scopeVar1,
           $scope.scopeVar2));
     });
 
