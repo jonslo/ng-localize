@@ -14,8 +14,8 @@
 
         angular.module('localization-example', ['ngSanitize', 'localization.filter', 'localization.directive'])
             .config(function(LocalizationStorageProvider) {
-              LocalizationStorageProvider.add('en', {headline: 'Localize your Angular apps', linkGithub: 'view on Github', changeLanguage: 'Change language', current: 'Language: <i>"{0}"</i>, Text: "{1}"'});
-              LocalizationStorageProvider.add('de', {headline: 'Lokalisiere deine Angular Apps', linkGithub: 'ansehen auf Github', changeLanguage: 'Sprache ändern', current: 'Sprache: <i>"{0}"</i>, Text: "{1}"'});
+              LocalizationStorageProvider.add('en', {headline: 'Localize your Angular apps', linkGithub: 'view on Github', changeLanguage: 'Change language', current: 'Language: <i>"{0}"</i>, Foo: "{1}"'});
+              LocalizationStorageProvider.add('de', {headline: 'Lokalisiere deine Angular Apps', linkGithub: 'ansehen auf Github', changeLanguage: 'Sprache ändern', current: 'Sprache: <i>"{0}"</i>, Foo: "{1}"'});
             })
             .controller('exampleController', function($scope, $filter, localize, LocalizationStorage) {
               $scope.localeList = LocalizationStorage.list();
@@ -73,27 +73,39 @@
                   <dl>
                     <dt>No arguments:</dt>
                     <dd>
-                      <localize key="current"></localize>
+                      <code>
+                        <localize key="current"></localize>
+                      </code>
                     </dd>
-                    <dt>Two arguments (variable + string):</dt>
+                    <dt>Arguments (variable + string):</dt>
                     <dd>
-                      <localize key="current" vars="[locale, 'test']"></localize>
+                      <code>
+                        <localize key="current" vars="[locale, 'Bar']"></localize>
+                      </code>
                     </dd>
-                    <dt>Two arguments (variable + string) unescaped:</dt>
+                    <dt>Arguments (variable + string), HTML output:</dt>
                     <dd>
-                      <localize key="current" vars="[locale, 'test']" localize-html></localize>
+                      <code>
+                        <localize key="current" vars="[locale, 'Bar']" localize-html></localize>
+                      </code>
                     </dd>
                   </dl>
                 </div>
                 <div class="col-md-6">
                   <h4>Filter:</h4>
                   <dl>
-                    <dt>No arguments: <span class="label label-warning">Doesn't work in Angular >1.2</span> </dt>
-                    <dd>{{'current' | localize}}</dd>
-                    <dt>Two arguments (variable + string):</dt>
-                    <dd>{{'current' | localize:locale:'test'}}</dd>
-                    <dt>Two arguments (variable + string) unescaped:</dt>
-                    <dd ng-bind-html="'current' | localize:locale:'test'"></dd>
+                    <dt>No arguments: <span class="label label-warning">Doesn't update in Angular >1.2</span> </dt>
+                    <dd>
+                      <code ng-bind="'current' | localize"></code>
+                    </dd>
+                    <dt>Arguments (variable + string):</dt>
+                    <dd>
+                      <code ng-bind="'current' | localize:locale:'Bar'"></code>
+                    </dd>
+                    <dt>Arguments (variable + string), HTML output:</dt>
+                    <dd>
+                      <code ng-bind-html="'current' | localize:locale:'Bar'"></code>
+                    </dd>
                   </dl>
                 </div>
               </div>
