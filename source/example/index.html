@@ -12,12 +12,14 @@
       (function() {
         'use strict';
 
-        angular.module('localization-example', ['localization.filter', 'localization.directive'])
+        angular.module('localization-example', ['ngSanitize', 'localization.filter', 'localization.directive'])
             .config(function(LocalizationStorageProvider) {
-              LocalizationStorageProvider.add('en', {headline: 'Localize your Angular apps', linkGithub: 'view on Github', changeLanguage: 'Switch language', current: 'Current localization: "{0}", {1}'});
-              LocalizationStorageProvider.add('de', {headline: 'Lokalisiere deine Angular Apps', linkGithub: 'ansehen auf Github', changeLanguage: 'Sprache ändern', current: 'Aktuelle Lokalisierung: "{0}", {1}'});
+              LocalizationStorageProvider.add('en', {headline: 'Localize your Angular apps', linkGithub: 'view on Github', changeLanguage: 'Change language', current: 'Language: <i>"{0}"</i>, Text: "{1}"'});
+              LocalizationStorageProvider.add('de', {headline: 'Lokalisiere deine Angular Apps', linkGithub: 'ansehen auf Github', changeLanguage: 'Sprache ändern', current: 'Sprache: <i>"{0}"</i>, Text: "{1}"'});
             })
             .controller('exampleController', function($scope, $filter, localize, LocalizationStorage) {
+              $scope.localeList = LocalizationStorage.list();
+
               var localization = LocalizationStorage.get();
               $scope.locale = localization.activeId;
               $scope.variable = 'test1';
@@ -50,35 +52,50 @@
 
           <div class="inner cover">
             <h1 class="cover-heading" localize key="headline"></h1>
-            <p class="lead">Add some nice and crisp description about how Angular-Localization is going to make your life so much better. You will ask yourself how you ever <em>NOT</em> used it before!</p>
+            <p class="lead">A nice and crisp description about how Angular-Localization is going to make your life so much better. You will ask yourself how you ever <em>NOT</em> used it before!</p>
             <p class="lead">
-              <button class="btn btn-lg btn-danger" ng-click="switchLocalization()" localize key="changeLanguage"></button>
+              <button class="btn btn-lg btn-success" ng-click="switchLocalization()">
+                <localize key="changeLanguage"></localize>
+                <i class="glyphicon glyphicon-flag"></i>
+              </button>
             </p>
 
-
-            <h4>Locale: {{locale}}</h4>
-            <div class="row text-left">
-              <div class="col-md-6">
-                <h4>Directive:</h4>
-                <dl>
-                  <dt>directive:</dt>
-                  <dd>
-                    <localize key="current" vars="[locale, 'test']"></localize>
-                  </dd>
-                  <dt>directive:</dt>
-                  <dd>
-                    <localize key="current"></localize>
-                  </dd>
-                </dl>
-              </div>
-              <div class="col-md-6">
-                <h4>Filter:</h4>
-                <dl>
-                  <dt>filter:</dt>
-                  <dd>{{'current' | localize:locale:variable}}</dd>
-                  <dt>filter:</dt>
-                  <dd>{{'current' | localize}}</dd>
-                </dl>
+            <div class="well">
+              <h3>
+                Current Locale:
+                <span ng-repeat="item in localeList">
+                  <span ng-class="{'label-default': item != locale, 'label-success': item == locale}" class="label">{{item}}</span>
+                </span>
+              </h3>
+              <div class="row text-left">
+                <div class="col-md-6">
+                  <h4>Directive:</h4>
+                  <dl>
+                    <dt>No arguments:</dt>
+                    <dd>
+                      <localize key="current"></localize>
+                    </dd>
+                    <dt>Two arguments (variable + string):</dt>
+                    <dd>
+                      <localize key="current" vars="[locale, 'test']"></localize>
+                    </dd>
+                    <dt>Two arguments (variable + string) unescaped:</dt>
+                    <dd>
+                      <localize key="current" vars="[locale, 'test']" localize-html></localize>
+                    </dd>
+                  </dl>
+                </div>
+                <div class="col-md-6">
+                  <h4>Filter:</h4>
+                  <dl>
+                    <dt>No arguments: <span class="label label-warning">Doesn't work in Angular >1.2</span> </dt>
+                    <dd>{{'current' | localize}}</dd>
+                    <dt>Two arguments (variable + string):</dt>
+                    <dd>{{'current' | localize:locale:'test'}}</dd>
+                    <dt>Two arguments (variable + string) unescaped:</dt>
+                    <dd ng-bind-html="'current' | localize:locale:'test'"></dd>
+                  </dl>
+                </div>
               </div>
             </div>
           </div>
