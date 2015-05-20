@@ -17,3 +17,10 @@ lingon.postProcessors.push('js', /\.min\./, function(params) {
     })
   ];
 });
+
+// redirect user to the example page if not requesting a specific file
+lingon.one('serverConfigure', function() {
+  lingon.server.get('/', function(req, res) {
+    res.redirect('/example/index.html');
+  });
+});
