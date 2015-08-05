@@ -35,91 +35,100 @@
     </script>
   </head>
   <body ng-controller="exampleController">
-    <div class="site-wrapper">
-      <div class="site-wrapper-inner">
-        <div class="cover-container">
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Angular-Localization</a>
+        </div>
 
-          <div class="masthead clearfix">
-            <div class="inner">
-              <h3 class="masthead-brand">Angular-Localization</h3>
-              <nav>
-                <ul class="nav masthead-nav">
-                  <li><a href="https://github.com/philipvonbargen/angular-localization" target="_blank"><localize key="linkGithub"></localize> <sup><i class="glyphicon glyphicon-new-window"></i></sup></a></li>
-                </ul>
-              </nav>
-            </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="https://github.com/philipvonbargen/angular-localization" target="_blank"><localize key="linkGithub"></localize> <sup><i class="glyphicon glyphicon-new-window"></i></sup></a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <div class="jumbotron">
+        <h1 class="cover-heading" localize key="headline"></h1>
+        <p class="lead">A nice and crisp description about how Angular-Localization is going to make your life so much better. You will ask yourself how you worked  <em>WITHOUT</em> it before!</p>
+        <p class="lead">
+          <button class="btn btn-lg btn-primary" ng-click="switchLocalization()">
+            <localize key="changeLanguage"></localize>
+            <i class="glyphicon glyphicon-flag"></i>
+          </button>
+        </p>
+      </div>
+
+      <div class="">
+        <h3>
+          Current Locale:
+          <span ng-repeat="item in localeList">
+            <span ng-class="{'label-default': item != locale, 'label-info': item == locale}" class="label">{{item}}</span>
+          </span>
+        </h3>
+        <div class="row text-left">
+          <div class="col-md-6">
+            <h4>Directive:</h4>
+            <dl>
+              <dt>No arguments:</dt>
+              <dd>
+                <pre>&lt;code&gt;
+  &lt;localize key=&quot;current&quot;&gt;&lt;/localize&gt;
+&lt;/code&gt;</pre>
+                <code>
+                  <localize key="current"></localize>
+                </code>
+              </dd>
+              <dt>Arguments (variable + string):</dt>
+              <dd>
+                <pre>&lt;code&gt;
+  &lt;localize key=&quot;current&quot; vars=&quot;[locale, &#039;Bar&#039;]&quot;&gt;&lt;/localize&gt;
+&lt;/code&gt;</pre>
+                <code>
+                  <localize key="current" vars="[locale, 'Bar']"></localize>
+                </code>
+              </dd>
+              <dt>Arguments (variable + string), HTML output:</dt>
+              <dd>
+                <pre>&lt;code&gt;
+  &lt;localize key=&quot;current&quot; vars=&quot;[locale, &#039;Bar&#039;]&quot; localize-html&gt;&lt;/localize&gt;
+&lt;/code&gt;</pre>
+                <code>
+                  <localize key="current" vars="[locale, 'Bar']" localize-html></localize>
+                </code>
+              </dd>
+            </dl>
           </div>
-
-          <div class="inner cover">
-            <h1 class="cover-heading" localize key="headline"></h1>
-            <p class="lead">A nice and crisp description about how Angular-Localization is going to make your life so much better. You will ask yourself how you ever <em>NOT</em> used it before!</p>
-            <p class="lead">
-              <button class="btn btn-lg btn-success" ng-click="switchLocalization()">
-                <localize key="changeLanguage"></localize>
-                <i class="glyphicon glyphicon-flag"></i>
-              </button>
-            </p>
-
-            <div class="well">
-              <h3>
-                Current Locale:
-                <span ng-repeat="item in localeList">
-                  <span ng-class="{'label-default': item != locale, 'label-success': item == locale}" class="label">{{item}}</span>
-                </span>
-              </h3>
-              <div class="row text-left">
-                <div class="col-md-6">
-                  <h4>Directive:</h4>
-                  <dl>
-                    <dt>No arguments:</dt>
-                    <dd>
-                      <code>
-                        <localize key="current"></localize>
-                      </code>
-                    </dd>
-                    <dt>Arguments (variable + string):</dt>
-                    <dd>
-                      <code>
-                        <localize key="current" vars="[locale, 'Bar']"></localize>
-                      </code>
-                    </dd>
-                    <dt>Arguments (variable + string), HTML output:</dt>
-                    <dd>
-                      <code>
-                        <localize key="current" vars="[locale, 'Bar']" localize-html></localize>
-                      </code>
-                    </dd>
-                  </dl>
-                </div>
-                <div class="col-md-6">
-                  <h4>Filter:</h4>
-                  <dl>
-                    <dt>No arguments: <span class="label label-warning">Doesn't update in Angular >1.2</span> </dt>
-                    <dd>
-                      <code ng-bind="'current' | localize"></code>
-                    </dd>
-                    <dt>Arguments (variable + string):</dt>
-                    <dd>
-                      <code ng-bind="'current' | localize:locale:'Bar'"></code>
-                    </dd>
-                    <dt>Arguments (variable + string), HTML output:</dt>
-                    <dd>
-                      <code ng-bind-html="'current' | localize:locale:'Bar'"></code>
-                    </dd>
-                  </dl>
-                </div>
-              </div>
-            </div>
+          <div class="col-md-6">
+            <h4>Filter:</h4>
+            <dl>
+              <dt>No arguments: <span class="label label-warning">Doesn't update in Angular >1.2</span> </dt>
+              <dd>
+                <pre>&lt;code ng-bind=&quot;&#039;current&#039; | localize&quot;&gt;&lt;/code&gt;</pre>
+                <code ng-bind="'current' | localize"></code>
+              </dd>
+              <dt>Arguments (variable + string):</dt>
+              <dd>
+                <pre>&lt;code ng-bind=&quot;&#039;current&#039; | localize:locale:&#039;Bar&#039;&quot;&gt;&lt;/code&gt;</pre>
+                <code ng-bind="'current' | localize:locale:'Bar'"></code>
+              </dd>
+              <dt>Arguments (variable + string), HTML output:</dt>
+              <dd>
+                <pre>&lt;code ng-bind-html=&quot;&#039;current&#039; | localize:locale:&#039;Bar&#039;&quot;&gt;&lt;/code&gt;</pre>
+                <code ng-bind-html="'current' | localize:locale:'Bar'"></code>
+              </dd>
+            </dl>
           </div>
-
-          <div class="mastfoot">
-            <div class="inner">
-              <p>Licensed under the MIT license.</p>
-            </div>
-          </div>
-
         </div>
       </div>
+
     </div>
+
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">Licensed under the MIT license.</p>
+      </div>
+    </footer>
   </body>
 </html>
