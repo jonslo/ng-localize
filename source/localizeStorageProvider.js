@@ -1,13 +1,13 @@
 ((window, document, undefined) => {
   'use strict';
 
-  angular.module('localization.storage', [])
-    .provider('LocalizationStorage', LocalizationStorageProvider);
+  angular.module('localize.storage', [])
+    .provider('LocalizeStorage', LocalizeStorageProvider);
 
   /**
    * Handles the storage of localizations for the 'localize' filter
    */
-  function LocalizationStorageProvider() {
+  function LocalizeStorageProvider() {
     let storage = {};
     let publicStorage = {
       active: null,
@@ -101,7 +101,7 @@
     this.set = setLocalizationByArray;
     this.strict = setStrictMode;
 
-    this.$get = function LocalizationStorageFactory($rootScope) {
+    this.$get = function LocalizeStorageFactory($rootScope) {
       return {
         add: addLocalization,
         get: getLocalization,

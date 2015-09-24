@@ -1,7 +1,7 @@
 ((window, document, undefined) => {
   'use strict';
 
-  angular.module('localization.directive', ['localization.service'])
+  angular.module('localize.directive', ['localize.service'])
     .directive('localize', LocalizeDirective);
 
   function LocalizeDirective($compile, $filter, $sce, $log, localize) {

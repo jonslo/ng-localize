@@ -1,7 +1,7 @@
 'use strict';
 
-describe('Localization service', () => {
-  let LocalizationStorage;
+describe('Localize service', () => {
+  let LocalizeStorage;
   let $log;
   let localize;
 
@@ -42,15 +42,15 @@ describe('Localization service', () => {
     }
   }
 
-  beforeEach(angular.mock.module('localization.service'));
+  beforeEach(angular.mock.module('localize.service'));
 
   beforeEach(angular.mock.inject(($injector) => {
-    LocalizationStorage = $injector.get('LocalizationStorage');
+    LocalizeStorage = $injector.get('LocalizeStorage');
     $log = $injector.get('$log');
     localize = $injector.get('localize');
 
-    LocalizationStorage.add('en', LOCALIZATIONS_EN);
-    LocalizationStorage.add('de', LOCALIZATIONS_DE);
+    LocalizeStorage.add('en', LOCALIZATIONS_EN);
+    LocalizeStorage.add('de', LOCALIZATIONS_DE);
   }));
 
   it('translates a simple string', () => {
@@ -74,7 +74,7 @@ describe('Localization service', () => {
   });
 
   it('translates to languages other than the default one', () => {
-    LocalizationStorage.get('de');
+    LocalizeStorage.get('de');
     expect(localize('simple')).toBe(EXPECTED_DE.simple);
     expect(localize('variable', VARIABLES.variable)).toBe(EXPECTED_DE.variable);
     expect(localize('variables', VARIABLES.variables[0], VARIABLES.variables[1])).toBe(EXPECTED_DE.variables);
@@ -82,7 +82,7 @@ describe('Localization service', () => {
     expect(localize('variablesMultipleUses', VARIABLES.variablesMultipleUses[0], VARIABLES.variablesMultipleUses[1])).toBe(EXPECTED_DE.variablesMultipleUses);
   });
 
-  it('displays the requested string for nonexistent localization and logs a warning in the console', () => {
+  it('displays the requested string for nonexistent Localize and logs a warning in the console', () => {
     expect(localize('nonexistent')).toBe('nonexistent');
     expect($log.warn.logs.length).toBe(1);
     expect($log.warn.logs[0]).toEqual(['No translation has been found for the id "nonexistent"',]);
@@ -92,7 +92,7 @@ describe('Localization service', () => {
 
   it('throws an TranslationNotFoundException for nonexistent localizations in strict mode', () => {
     let exceptionName;
-    LocalizationStorage.strict(true);
+    LocalizeStorage.strict(true);
 
     try {
       localize('nonexistent');

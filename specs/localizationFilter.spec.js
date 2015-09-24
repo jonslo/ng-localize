@@ -1,7 +1,7 @@
 'use strict';
 
-describe('Localization filter', () => {
-  let LocalizationStorage;
+describe('Localize filter', () => {
+  let LocalizeStorage;
   let $filter;
 
   let VARIABLES = {
@@ -18,13 +18,13 @@ describe('Localization filter', () => {
     variablesMultipleUses: `"${VARIABLES.variablesMultipleUses[1]}" equals "${VARIABLES.variablesMultipleUses[1]}" and "${VARIABLES.variablesMultipleUses[0]}" equals "${VARIABLES.variablesMultipleUses[0]}".`,
   };
 
-  beforeEach(angular.mock.module('localization.filter'));
+  beforeEach(angular.mock.module('localize.filter'));
 
   beforeEach(angular.mock.inject(($injector) => {
-    LocalizationStorage = $injector.get('LocalizationStorage');
+    LocalizeStorage = $injector.get('LocalizeStorage');
     $filter = $injector.get('$filter');
 
-    LocalizationStorage.add('en', LOCALIZATIONS_EN);
+    LocalizeStorage.add('en', LOCALIZATIONS_EN);
   }));
 
   it('translates a string with multiple uses of the same variable', () => {

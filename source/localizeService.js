@@ -1,11 +1,11 @@
 ((window, document, undefined) => {
   'use strict';
 
-  angular.module('localization.service', ['localization.storage'])
+  angular.module('localize.service', ['localize.storage'])
     .service('localize', LocalizeService);
 
-  function LocalizeService($log, LocalizationStorage) {
-    let localizations = LocalizationStorage.get();
+  function LocalizeService($log, LocalizeStorage) {
+    let localizations = LocalizeStorage.get();
 
     return (id, ...parameters) => {
       let template = localizations.active[id];

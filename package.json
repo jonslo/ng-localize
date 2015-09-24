@@ -1,8 +1,7 @@
 {
-  "name": "angular-localization",
-  "version": "0.0.1",
-  "private": true,
-  "homepage": "https://github.com/philipvonbargen/angular-localization",
+  "name": "ng-localize",
+  "version": "1.0.0",
+  "homepage": "https://github.com/philipvonbargen/ng-localize",
   "author": {
     "name": "Philip von Bargen",
     "email": "philip@philipvonbargen.de",
@@ -10,17 +9,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/philipvonbargen/angular-localization.git"
+    "url": "git://github.com/philipvonbargen/ng-localize.git"
   },
   "bugs": {
-    "url": "https://github.com/philipvonbargen/angular-localization/issues"
+    "url": "https://github.com/philipvonbargen/ng-localize/issues"
   },
-  "licenses": [
+  "license": [
     {
       "type": "MIT",
-      "url": "https://github.com/philipvonbargen/angular-localization/blob/master/LICENSE"
+      "url": "https://github.com/philipvonbargen/ng-localize/blob/master/LICENSE"
     }
   ],
+  "main": "dist/localization.all.min.js",
   "scripts": {
     "codestyle": "jscs . --reporter=inline",
     "postinstall": "bower install --allow-root --config.interactive=false",

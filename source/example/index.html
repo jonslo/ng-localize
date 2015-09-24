@@ -2,35 +2,35 @@
 <html ng-app="localization-example">
   <head>
     <meta charset="utf-8">
-    <title>Angular-Localization</title>
+    <title>ng-localize</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link href="vendor.css" media="screen" rel="stylesheet">
 
     <script src="vendor.js"></script>
-    <script src="../localization.all.min.js"></script>
+    <script src="../localize.all.min.js"></script>
     <script>
       (function() {
         'use strict';
 
-        angular.module('localization-example', ['ngSanitize', 'localization.filter', 'localization.directive'])
+        angular.module('localization-example', ['ngSanitize', 'localize.filter', 'localize.directive'])
           .config(AppConfig)
           .controller('ExampleController', ExampleController);
 
-        function AppConfig(LocalizationStorageProvider) {
-          LocalizationStorageProvider.add('en', {headline: 'Localize your Angular apps', linkGithub: 'view on Github', changeLanguage: 'Change language', current: 'Language: <i>"{0}"</i>, Foo: "{1}"'});
-          LocalizationStorageProvider.add('de', {headline: 'Lokalisiere deine Angular Apps', linkGithub: 'ansehen auf Github', changeLanguage: 'Sprache ändern', current: 'Sprache: <i>"{0}"</i>, Foo: "{1}"'});
+        function AppConfig(LocalizeStorageProvider) {
+          LocalizeStorageProvider.add('en', {headline: 'Localize your Angular apps', linkGithub: 'view on Github', changeLanguage: 'Change language', current: 'Language: <i>"{0}"</i>, Foo: "{1}"'});
+          LocalizeStorageProvider.add('de', {headline: 'Lokalisiere deine Angular Apps', linkGithub: 'ansehen auf Github', changeLanguage: 'Sprache ändern', current: 'Sprache: <i>"{0}"</i>, Foo: "{1}"'});
         }
 
-        function ExampleController($filter, localize, LocalizationStorage) {
+        function ExampleController($filter, localize, LocalizeStorage) {
           var vm = this;
-          vm.localeList = LocalizationStorage.list();
+          vm.localeList = LocalizeStorage.list();
 
-          var localization = LocalizationStorage.get();
+          var localization = LocalizeStorage.get();
           vm.locale = localization.activeId;
           vm.variable = 'test1';
 
           vm.switchLocalization = function() {
-            LocalizationStorage.set(localization.activeId == 'en' ? 'de' : 'en');
+            LocalizeStorage.set(localization.activeId == 'en' ? 'de' : 'en');
             vm.locale = localization.activeId;
 
             vm.variable = vm.variable == 'test1' ? 'test2' : 'test1';
@@ -43,11 +43,11 @@
     <nav class="navbar navbar-default">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">Angular-Localization</a>
+          <a class="navbar-brand" href="#">ng-localize</a>
         </div>
 
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="https://github.com/philipvonbargen/angular-localization" target="_blank"><localize key="linkGithub"></localize> <sup><i class="glyphicon glyphicon-new-window"></i></sup></a></li>
+          <li><a href="https://github.com/philipvonbargen/ng-localize" target="_blank"><localize key="linkGithub"></localize> <sup><i class="glyphicon glyphicon-new-window"></i></sup></a></li>
         </ul>
       </div>
     </nav>
@@ -56,7 +56,7 @@
 
       <div class="jumbotron">
         <h1 class="cover-heading" localize key="headline"></h1>
-        <p class="lead">A nice and crisp description about how Angular-Localization is going to make your life so much better. You will ask yourself how you worked  <em>WITHOUT</em> it before!</p>
+        <p class="lead">A nice and crisp description about how ng-localize is going to make your life so much better. You will ask yourself how you worked  <em>WITHOUT</em> it before!</p>
         <p class="lead">
           <button class="btn btn-lg btn-primary" ng-click="vm.switchLocalization()">
             <localize key="changeLanguage"></localize>

@@ -1,7 +1,7 @@
 ((window, document, undefined) => {
   'use strict';
 
-  angular.module('localization.filter', ['localization.service'])
+  angular.module('localize.filter', ['localize.service'])
     .filter('localize', LocalizeFilter);
 
   function LocalizeFilter(localize) {

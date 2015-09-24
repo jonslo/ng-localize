@@ -1,8 +1,7 @@
 {
-  "name": "angular-localization",
-  "version": "0.0.1",
-  "private": true,
-  "homepage": "https://github.com/philipvonbargen/angular-localization",
+  "name": "ng-localize",
+  "version": "1.0.0",
+  "homepage": "https://github.com/philipvonbargen/ng-localize",
   "authors": [{
     "name": "Philip von Bargen",
     "email": "philip@philipvonbargen.de",
@@ -10,7 +9,7 @@
   }],
   "repository": {
     "type": "git",
-    "url": "git://github.com/philipvonbargen/angular-localization.git"
+    "url": "git://github.com/philipvonbargen/ng-localize.git"
   },
   "license": "MIT",
   "ignore": [],

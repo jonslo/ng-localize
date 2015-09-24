@@ -1,7 +1,7 @@
 'use strict';
 
-describe('Localization directive', () => {
-  let LocalizationStorage;
+describe('Localize directive', () => {
+  let LocalizeStorage;
   let localize;
   let $scope;
   let element;
@@ -36,13 +36,13 @@ describe('Localization directive', () => {
   };
 
   beforeEach(angular.mock.module('ngSanitize'));
-  beforeEach(angular.mock.module('localization.directive'));
+  beforeEach(angular.mock.module('localize.directive'));
   beforeEach(angular.mock.inject(($injector) => {
-    LocalizationStorage = $injector.get('LocalizationStorage');
+    LocalizeStorage = $injector.get('LocalizeStorage');
     localize = $injector.get('localize');
 
-    LocalizationStorage.add('en', LOCALIZATIONS_EN);
-    LocalizationStorage.add('de', LOCALIZATIONS_DE);
+    LocalizeStorage.add('en', LOCALIZATIONS_EN);
+    LocalizeStorage.add('de', LOCALIZATIONS_DE);
   }));
 
   it('localizes a simple string', () => {
@@ -54,7 +54,7 @@ describe('Localization directive', () => {
     createTestEnv('key');
     expect(element.innerText).toEqual(localize('key'));
 
-    LocalizationStorage.set('de');
+    LocalizeStorage.set('de');
     expect(element.innerText).toEqual(localize('key'));
   });
 
@@ -67,7 +67,7 @@ describe('Localization directive', () => {
     createTestEnv('key', `'test'`);
     expect(element.innerText).toEqual(localize('key', 'test'));
 
-    LocalizationStorage.set('de');
+    LocalizeStorage.set('de');
     expect(element.innerText).toEqual(localize('key', 'test'));
   });
 
@@ -80,7 +80,7 @@ describe('Localization directive', () => {
     createTestEnv('key', `['string 1', 'string 2']`);
     expect(element.innerText).toEqual(localize('key', 'string 1', 'string 2'));
 
-    LocalizationStorage.set('de');
+    LocalizeStorage.set('de');
     expect(element.innerText).toEqual(localize('key', 'string 1', 'string 2'));
   });
 
@@ -97,7 +97,7 @@ describe('Localization directive', () => {
 
     expect(element.innerText).toEqual(localize('key', $scope.scopeVar));
 
-    LocalizationStorage.set('de');
+    LocalizeStorage.set('de');
     expect(element.innerText).toEqual(localize('key', $scope.scopeVar));
   });
 
@@ -127,7 +127,7 @@ describe('Localization directive', () => {
 
     expect(element.innerText).toEqual(localize('key', $scope.scopeVar1, $scope.scopeVar2));
 
-    LocalizationStorage.set('de');
+    LocalizeStorage.set('de');
     expect(element.innerText).toEqual(localize('key', $scope.scopeVar1, $scope.scopeVar2));
   });
 
