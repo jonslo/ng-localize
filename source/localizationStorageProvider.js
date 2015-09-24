@@ -1,22 +1,23 @@
-(function(window, document, undefined) {
+((window, document, undefined) => {
   'use strict';
 
-  var app = angular.module('localization.storage', []);
+  angular.module('localization.storage', [])
+    .provider('LocalizationStorage', LocalizationStorageProvider);
 
   /**
    * Handles the storage of localizations for the 'localize' filter
    */
-  app.provider('LocalizationStorage', function LocalizationStorageProvider() {
-    var storage = {};
-    var publicStorage = {
-      active     : null,
-      activeId   : null,
-      strictMode : false
+  function LocalizationStorageProvider() {
+    let storage = {};
+    let publicStorage = {
+      active: null,
+      activeId: null,
+      strictMode: false,
     };
 
     // add a localization to the storage, can be immediatly marked as
     // active by third argument
-    var addLocalization = function addLocalization(locale, value, setActive /*optional*/) {
+    function addLocalization(locale, value, setActive /*optional*/) {
       storage[locale] = {};
       angular.copy(value, storage[locale]);
 
@@ -28,7 +29,7 @@
     };
 
     // get the currently active localization or set a new one and get that
-    var getLocalization = function getLocalization(locale /*optional*/) {
+    function getLocalization(locale /*optional*/) {
       if (locale) {
         setLocalizationByArray(locale);
       }
@@ -37,10 +38,10 @@
     };
 
     // list all stored localization keys
-    var listLocalizations = function listLocalizations() {
-      var list = [];
+    function listLocalizations() {
+      let list = [];
 
-      for (var key in storage) {
+      for (let key in storage) {
         if (storage.hasOwnProperty(key)) {
           list.push(key);
         }
@@ -50,13 +51,13 @@
     };
 
     // set the active locale to the first found one, returns boolean wether the action succeded
-    var setLocalizationByArray = function setLocalizationByArray(locales) {
+    function setLocalizationByArray(locales) {
       if (!angular.isArray(locales)) {
         locales = [locales];
       }
 
-      for (var i = 0, j = locales.length; i < j; i++) {
-        var locale = locales[i];
+      for (let i = 0, j = locales.length; i < j; i++) {
+        let locale = locales[i];
         if (setLocalization(locales[i])) {
           return true;
         } else {
@@ -74,7 +75,7 @@
     };
 
     // set the active locale, returns boolean wether the action succeded
-    var setLocalization = function setLocalization(locale) {
+    function setLocalization(locale) {
       if (locale && storage[locale]) {
         publicStorage.activeId = locale;
         publicStorage.active = storage[locale];
@@ -88,7 +89,7 @@
     // enables/disables strict mode. If enabled and no localization is found
     // in the filter an exception will be thrown, if disabled the requested
     // string will be output instead
-    var setStrictMode = function setStrictMode(strictMode) {
+    function setStrictMode(strictMode) {
       publicStorage.strictMode = !!strictMode;
 
       return publicStorage.strictMode;
@@ -102,23 +103,23 @@
 
     this.$get = function LocalizationStorageFactory($rootScope) {
       return {
-        add    : addLocalization,
-        get    : getLocalization,
-        list   : listLocalizations,
-        set    : function() {
+        add: addLocalization,
+        get: getLocalization,
+        list: listLocalizations,
+        set: (...args) => {
           // returns boolean if setting the locale was successful
-          if (setLocalizationByArray.apply(null, arguments)) {
+          if (setLocalizationByArray.apply(null, args)) {
             $rootScope.$broadcast('LocaleChange');
             return true;
           }
 
           return false;
         },
-        strict : setStrictMode
+
+        strict: setStrictMode,
       };
     };
 
   }
-);
 
 })(window, document);

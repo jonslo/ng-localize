@@ -1,22 +1,22 @@
-(function(window, document, undefined) {
+((window, document, undefined) => {
   'use strict';
 
-  var app = angular.module('localization.directive', ['localization.service']);
+  angular.module('localization.directive', ['localization.service'])
+    .directive('localize', LocalizeDirective);
 
-  app.directive('localize', function LocalizeDirective($compile, $filter,
-      $sce, $log, localize) {
+  function LocalizeDirective($compile, $filter, $sce, $log, localize) {
     return {
-      restrict : 'AE',
-      link     : function link($scope, elem, attrs) {
-        var variables = $scope.$eval(attrs.vars);
+      restrict: 'AE',
+      link: ($scope, elem, attrs) => {
+        let variables = $scope.$eval(attrs.vars);
         if (!angular.isArray(variables)) {
           variables = [variables];
         }
 
         // function to render the translated template
-        var renderTemplate = function renderTemplate() {
-          var templateArgs = [attrs.key].concat(variables);
-          var template = localize.apply(null, templateArgs);
+        function renderTemplate() {
+          let templateArgs = [attrs.key].concat(variables);
+          let template = localize.apply(null, templateArgs);
 
           if ('localizeHtml' in attrs) {
             elem = elem.html($sce.getTrustedHtml(template));
@@ -26,8 +26,7 @@
         };
 
         // watch for updated scope variables
-        var watchCollectionHandle = $scope.$watchCollection(attrs.vars,
-            function(newValues, oldValues, scope) {
+        let watchCollectionHandle = $scope.$watchCollection(attrs.vars, (newValues, oldValues, scope) => {
           if (angular.equals(newValues, oldValues)) { return; }
 
           variables = newValues;
@@ -35,10 +34,10 @@
         });
 
         // watch for locale change
-        var onLocaleChangeHandle = $scope.$on('LocaleChange', renderTemplate);
+        let onLocaleChangeHandle = $scope.$on('LocaleChange', renderTemplate);
 
         // cleanup time!
-        elem.on('$destroy', function() {
+        elem.on('$destroy', () => {
           watchCollectionHandle();
           watchCollectionHandle = null;
 
@@ -48,8 +47,8 @@
 
         // do the initial render
         renderTemplate();
-      }
+      },
     };
-  });
+  }
 
 })(window, document);

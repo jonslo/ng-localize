@@ -1,23 +1,22 @@
-(function(window, document, undefined) {
+((window, document, undefined) => {
   'use strict';
 
-  var app = angular.module('localization.service', ['localization.storage']);
+  angular.module('localization.service', ['localization.storage'])
+    .service('localize', LocalizeService);
 
-  app.service('localize', function LocalizeService($log, LocalizationStorage) {
-    var localizations = LocalizationStorage.get();
+  function LocalizeService($log, LocalizationStorage) {
+    let localizations = LocalizationStorage.get();
 
-    return function localize(id) {
-      var parameters = Array.prototype.slice.call(arguments, 1);
-
-      var template = localizations.active[id];
+    return (id, ...parameters) => {
+      let template = localizations.active[id];
 
       if (!template) {
-        var message = 'No translation has been found for the id "' + id + '"';
+        let message = `No translation has been found for the id "${id}"`;
 
         // throw an exception in strict mode, otherwise
         // only warn and return the requested id itself
         if (localizations.strictMode) {
-          var error = new Error();
+          let error = new Error();
           error.name = 'TranslationNotFoundException';
           error.message = message;
           throw error;
@@ -29,12 +28,12 @@
         }
       }
 
-      var output = template.replace(/\{(\d+)}/g, function(match, submatchFirst) {
+      let output = template.replace(/\{(\d+)}/g, (match, submatchFirst) => {
         return parameters[submatchFirst];
       });
 
       return output;
     };
-  });
+  }
 
 })(window, document);

@@ -1,12 +1,13 @@
-(function(window, document, undefined) {
+((window, document, undefined) => {
   'use strict';
 
-  var app = angular.module('localization.filter', ['localization.service']);
+  angular.module('localization.filter', ['localization.service'])
+    .filter('localize', LocalizeFilter);
 
-  app.filter('localize', function LocalizeFilter(localize) {
-    return function localizeFilter() {
-      return localize.apply(null, arguments);
+  function LocalizeFilter(localize) {
+    return (...args) => {
+      return localize.apply(null, args);
     };
-  });
+  }
 
 })(window, document);
