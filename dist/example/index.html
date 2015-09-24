@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html ng-app="localization-example">
+  <head>
+    <meta charset="utf-8">
+    <title>ng-localize</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="vendor.css" media="screen" rel="stylesheet">
+
+    <script src="vendor.js"></script>
+    <script src="../localize.all.min.js"></script>
+    <script>
+      (function() {
+        'use strict';
+
+        angular.module('localization-example', ['ngSanitize', 'localize.filter', 'localize.directive'])
+          .config(AppConfig)
+          .controller('ExampleController', ExampleController);
+
+        function AppConfig(LocalizeStorageProvider) {
+          LocalizeStorageProvider.add('en', {headline: 'Localize your Angular apps', linkGithub: 'view on Github', changeLanguage: 'Change language', current: 'Language: <i>"{0}"</i>, Foo: "{1}"'});
+          LocalizeStorageProvider.add('de', {headline: 'Lokalisiere deine Angular Apps', linkGithub: 'ansehen auf Github', changeLanguage: 'Sprache ändern', current: 'Sprache: <i>"{0}"</i>, Foo: "{1}"'});
+        }
+
+        function ExampleController($filter, localize, LocalizeStorage) {
+          var vm = this;
+          vm.localeList = LocalizeStorage.list();
+
+          var localization = LocalizeStorage.get();
+          vm.locale = localization.activeId;
+          vm.variable = 'test1';
+
+          vm.switchLocalization = function() {
+            LocalizeStorage.set(localization.activeId == 'en' ? 'de' : 'en');
+            vm.locale = localization.activeId;
+
+            vm.variable = vm.variable == 'test1' ? 'test2' : 'test1';
+          };
+        }
+      })();
+    </script>
+  </head>
+  <body ng-controller="ExampleController as vm">
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">ng-localize</a>
+        </div>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="https://github.com/philipvonbargen/ng-localize" target="_blank"><localize key="linkGithub"></localize> <sup><i class="glyphicon glyphicon-new-window"></i></sup></a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <div class="jumbotron">
+        <h1 class="cover-heading" localize key="headline"></h1>
+        <p class="lead">A nice and crisp description about how ng-localize is going to make your life so much better. You will ask yourself how you worked  <em>WITHOUT</em> it before!</p>
+        <p class="lead">
+          <button class="btn btn-lg btn-primary" ng-click="vm.switchLocalization()">
+            <localize key="changeLanguage"></localize>
+            <i class="glyphicon glyphicon-flag"></i>
+          </button>
+        </p>
+      </div>
+
+      <div class="">
+        <h3>
+          Current Locale:
+          <span ng-repeat="item in vm.localeList">
+            <span ng-class="{'label-default': item != vm.locale, 'label-info': item == vm.locale}" class="label">{{::item}}</span>
+          </span>
+        </h3>
+        <div class="row text-left">
+          <div class="col-md-6">
+            <h4>Directive:</h4>
+            <dl>
+              <dt>No arguments:</dt>
+              <dd>
+                <pre>&lt;code&gt;
+  &lt;localize key=&quot;current&quot;&gt;&lt;/localize&gt;
+&lt;/code&gt;</pre>
+                <code>
+                  <localize key="current"></localize>
+                </code>
+              </dd>
+              <dt>Arguments (variable + string):</dt>
+              <dd>
+                <pre>&lt;code&gt;
+  &lt;localize key=&quot;current&quot; vars=&quot;[vm.locale, &#039;Bar&#039;]&quot;&gt;&lt;/localize&gt;
+&lt;/code&gt;</pre>
+                <code>
+                  <localize key="current" vars="[vm.locale, 'Bar']"></localize>
+                </code>
+              </dd>
+              <dt>Arguments (variable + string), HTML output:</dt>
+              <dd>
+                <pre>&lt;code&gt;
+  &lt;localize key=&quot;current&quot; vars=&quot;[vm.locale, &#039;Bar&#039;]&quot; localize-html&gt;&lt;/localize&gt;
+&lt;/code&gt;</pre>
+                <code>
+                  <localize key="current" vars="[vm.locale, 'Bar']" localize-html></localize>
+                </code>
+              </dd>
+            </dl>
+          </div>
+          <div class="col-md-6">
+            <h4>Filter:</h4>
+            <dl>
+              <dt>No arguments: <span class="label label-warning">Doesn't update in Angular >=1.3</span> </dt>
+              <dd>
+                <pre>&lt;code ng-bind=&quot;&#039;current&#039; | localize&quot;&gt;&lt;/code&gt;</pre>
+                <code ng-bind="'current' | localize"></code>
+              </dd>
+              <dt>Arguments (variable + string):</dt>
+              <dd>
+                <pre>&lt;code ng-bind=&quot;&#039;current&#039; | localize:vm.locale:&#039;Bar&#039;&quot;&gt;&lt;/code&gt;</pre>
+                <code ng-bind="'current' | localize:vm.locale:'Bar'"></code>
+              </dd>
+              <dt>Arguments (variable + string), HTML output:</dt>
+              <dd>
+                <pre>&lt;code ng-bind-html=&quot;&#039;current&#039; | localize:vm.locale:&#039;Bar&#039;&quot;&gt;&lt;/code&gt;</pre>
+                <code ng-bind-html="'current' | localize:vm.locale:'Bar'"></code>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">Licensed under the MIT license.</p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -8,7 +8,7 @@ bower install --save ng-localize
 ```
 
 ## Usage
-See [dist/example/index.html](https://github.com/philipvonbargen/ng-localize/blob/master/dist/example/index.html) for usage examples.
+See [dist/example/index.html](https://github.com/philipvonbargen/ng-localize/blob/master/dist/example/index.html#L15) for usage examples.
 
 ## License
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
