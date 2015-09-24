@@ -1,5 +1,4 @@
-// Karma configuration
-// Generated on Wed Apr 15 2015 15:26:38 GMT+0200 (CEST)
+/* jscs:disable */
 
 module.exports = function(config) {
   config.set({
@@ -34,6 +33,8 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      'source/*.js': ['babel'],
+      'specs/*.spec.js': ['babel'],
     },
 
 
