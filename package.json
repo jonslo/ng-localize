@@ -42,5 +42,17 @@
     "karma-phantomjs-launcher": "^0.2.1",
     "lingon": "2.2.10",
     "pre-commit": "^1.1.1"
-  }
+  },
+  "keywords": [
+    "angular",
+    "translation",
+    "localize",
+    "localise",
+    "localization",
+    "localisation",
+    "internationalization",
+    "internationalisation",
+    "i18n",
+    "L10n"
+  ]
 }
