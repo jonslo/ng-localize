@@ -17,10 +17,10 @@ module.exports = function(config) {
       'bower_components/angular/angular.js',
       'bower_components/angular-mocks/angular-mocks.js',
       'bower_components/angular-sanitize/angular-sanitize.js',
-      'source/localizeStorageProvider.js',
-      'source/localizeService.js',
-      'source/localizeFilter.js',
-      'source/localizeDirective.js',
+      'source/ng-localizeStorageProvider.js',
+      'source/ng-localizeService.js',
+      'source/ng-localizeFilter.js',
+      'source/ng-localizeDirective.js',
       'specs/*.spec.js'
     ],
 

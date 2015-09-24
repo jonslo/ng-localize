@@ -14,13 +14,8 @@
   "bugs": {
     "url": "https://github.com/philipvonbargen/ng-localize/issues"
   },
-  "license": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/philipvonbargen/ng-localize/blob/master/LICENSE"
-    }
-  ],
-  "main": "dist/localization.all.min.js",
+  "license": "MIT",
+  "main": "dist/ng-localization.all.min.js",
   "scripts": {
     "codestyle": "jscs . --reporter=inline",
     "postinstall": "bower install --allow-root --config.interactive=false",
