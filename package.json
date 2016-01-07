@@ -1,6 +1,6 @@
 {
   "name": "ng-localize",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "homepage": "https://github.com/philipvonbargen/ng-localize",
   "author": {
     "name": "Philip von Bargen",
@@ -15,7 +15,7 @@
     "url": "https://github.com/philipvonbargen/ng-localize/issues"
   },
   "license": "MIT",
-  "main": "dist/ng-localization.all.min.js",
+  "main": "dist/ng-localize.all.min.js",
   "scripts": {
     "codestyle": "jscs . --reporter=inline",
     "postinstall": "bower install --allow-root --config.interactive=false",

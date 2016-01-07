@@ -1,6 +1,6 @@
 {
   "name": "ng-localize",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "homepage": "https://github.com/philipvonbargen/ng-localize",
   "authors": [{
     "name": "Philip von Bargen",
@@ -13,7 +13,7 @@
   },
   "license": "MIT",
   "ignore": [],
-  "main": "dist/ng-localization.all.min.js",
+  "main": "dist/ng-localize.all.min.js",
   "dependencies": {
     "angular": "^1.2.0"
   },
