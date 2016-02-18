@@ -85,7 +85,7 @@ describe('Localize service', () => {
   it('displays the requested string for nonexistent Localize and logs a warning in the console', () => {
     expect(localize('nonexistent')).toBe('nonexistent');
     expect($log.warn.logs.length).toBe(1);
-    expect($log.warn.logs[0]).toEqual(['No translation has been found for the id "nonexistent"',]);
+    expect($log.warn.logs[0]).toEqual(['No translation has been found for the id "nonexistent"']);
 
     $log.reset();
   });

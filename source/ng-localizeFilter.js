@@ -1,13 +1,12 @@
-((window, document, undefined) => {
-  'use strict';
+'use strict';
 
-  angular.module('localize.filter', ['localize.service'])
-    .filter('localize', LocalizeFilter);
+import localizeService from './ng-localizeService.js';
 
-  function LocalizeFilter(localize) {
-    return (...args) => {
-      return localize.apply(null, args);
-    };
-  }
+export default angular.module('localize.filter', [localizeService.name])
+  .filter('localize', LocalizeFilter);
 
-})(window, document);
+function LocalizeFilter(localize) {
+  return (...args) => {
+    return localize.apply(null, args);
+  };
+}

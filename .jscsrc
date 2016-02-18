@@ -1,12 +1,13 @@
 {
   "preset": "airbnb",
   "safeContextKeyword": ["_this", "vm"],
-  "excludeFiles": ["node_modules", "bower_components", "dist"],
+  "excludeFiles": ["node_modules", "bower_components", "dist", "test/coverage"],
   "requireCurlyBraces": [
     "if",
     "else",
     "for",
     "while",
     "do"
-  ]
+  ],
+  maximumLineLength: false
 }

@@ -1,9 +1,9 @@
 'use strict';
 
-let LOCALIZATION_EN = {yes: 'Yes'};
-let LOCALIZATION_DE = {yes: 'Ja'};
-let LOCALIZATION_SV = {yes: 'Ja'};
-let LOCALIZATION_FR = {yes: 'Oui'};
+let LOCALIZATION_EN = { yes: 'Yes' };
+let LOCALIZATION_DE = { yes: 'Ja' };
+let LOCALIZATION_SV = { yes: 'Ja' };
+let LOCALIZATION_FR = { yes: 'Oui' };
 
 describe('LocalizeStorage service', () => {
   let LocalizeStorage;

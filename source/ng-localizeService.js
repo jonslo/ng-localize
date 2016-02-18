@@ -1,39 +1,38 @@
-((window, document, undefined) => {
-  'use strict';
+'use strict';
 
-  angular.module('localize.service', ['localize.storage'])
-    .service('localize', LocalizeService);
+import localizeStorageProvider from './ng-localizeStorageProvider.js';
 
-  function LocalizeService($log, LocalizeStorage) {
-    let localizations = LocalizeStorage.get();
+export default angular.module('localize.service', [localizeStorageProvider.name])
+  .service('localize', LocalizeService);
 
-    return (id, ...parameters) => {
-      let template = localizations.active[id];
+function LocalizeService($log, LocalizeStorage) {
+  let localizations = LocalizeStorage.get();
 
-      if (!template) {
-        let message = `No translation has been found for the id "${id}"`;
+  return (id, ...parameters) => {
+    let template = localizations.active[id];
 
-        // throw an exception in strict mode, otherwise
-        // only warn and return the requested id itself
-        if (localizations.strictMode) {
-          let error = new Error();
-          error.name = 'TranslationNotFoundException';
-          error.message = message;
-          throw error;
+    if (!template) {
+      let message = `No translation has been found for the id "${id}"`;
 
-        } else {
-          $log.warn(message);
+      // throw an exception in strict mode, otherwise
+      // only warn and return the requested id itself
+      if (localizations.strictMode) {
+        let error = new Error();
+        error.name = 'TranslationNotFoundException';
+        error.message = message;
+        throw error;
 
-          template = id;
-        }
+      } else {
+        $log.warn(message);
+
+        template = id;
       }
+    }
 
-      let output = template.replace(/\{(\d+)}/g, (match, submatchFirst) => {
-        return parameters[submatchFirst];
-      });
+    let output = template.replace(/\{(\d+)}/g, (match, submatchFirst) => {
+      return parameters[submatchFirst];
+    });
 
-      return output;
-    };
-  }
-
-})(window, document);
+    return output;
+  };
+}

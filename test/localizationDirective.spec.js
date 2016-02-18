@@ -22,7 +22,7 @@ describe('Localize directive', () => {
         `<localize
            ng-app key="${keyString}"
            vars="${varsString}"
-           ${(!!htmlMode ? 'localize-html' : '') /* output template as HTML */}
+           ${(!!htmlMode ? 'localize-html' : '')/* output template as HTML */}
          ></localize>`
       );
 
@@ -59,12 +59,12 @@ describe('Localize directive', () => {
   });
 
   it('localizes a string w/ a single string variable', () => {
-    createTestEnv('key', `'test'`);
+    createTestEnv('key', "'test'");
     expect(element.innerText).toEqual(localize('key', 'test'));
   });
 
   it('updates a string w/ a single string variable when the current language changes', () => {
-    createTestEnv('key', `'test'`);
+    createTestEnv('key', "'test'");
     expect(element.innerText).toEqual(localize('key', 'test'));
 
     LocalizeStorage.set('de');
@@ -72,12 +72,12 @@ describe('Localize directive', () => {
   });
 
   it('localizes a string w/ an array of strings', () => {
-    createTestEnv('key', `['string 1', 'string 2']`);
+    createTestEnv('key', "['string 1', 'string 2']");
     expect(element.innerText).toEqual(localize('key', 'string 1', 'string 2'));
   });
 
   it('updates a string w/ an array of strings when the current language changes', () => {
-    createTestEnv('key', `['string 1', 'string 2']`);
+    createTestEnv('key', "['string 1', 'string 2']");
     expect(element.innerText).toEqual(localize('key', 'string 1', 'string 2'));
 
     LocalizeStorage.set('de');

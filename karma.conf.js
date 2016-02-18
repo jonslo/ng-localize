@@ -1,5 +1,15 @@
 /* jscs:disable */
 
+'use strict';
+
+let webpackConfig = require('./webpack.config.js');
+webpackConfig.module.postLoaders = webpackConfig.module.postLoaders || [];
+webpackConfig.module.postLoaders.push({
+  test: /\.js$/,
+  exclude: /(test|node_modules|bower_components)\//,
+  loader: 'istanbul-instrumenter'
+});
+
 module.exports = function(config) {
   config.set({
 
@@ -14,14 +24,10 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'bower_components/angular/angular.js',
+      'source/example/vendor.js',
       'bower_components/angular-mocks/angular-mocks.js',
-      'bower_components/angular-sanitize/angular-sanitize.js',
-      'source/ng-localizeStorageProvider.js',
-      'source/ng-localizeService.js',
-      'source/ng-localizeFilter.js',
-      'source/ng-localizeDirective.js',
-      'specs/*.spec.js'
+      'source/ng-localize.all.js',
+      'test/*.spec.js'
     ],
 
 
@@ -33,15 +39,27 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'source/*.js': ['babel'],
-      'specs/*.spec.js': ['babel'],
+      'source/**/*.js': ['webpack'],
+      'test/**/*.js': ['webpack'],
     },
 
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['dots'],
+    reporters: ['mocha', 'coverage'],
+
+
+    coverageReporter: {
+      dir: 'test/coverage',
+      reporters: [
+        { type: 'html' },
+        { type: 'cobertura', subdir: '.', file: 'cobertura.xml' },
+      ],
+      instrumenterOptions: {
+        istanbul: { noCompact: true },
+      },
+    },
 
 
     // web server port
@@ -59,6 +77,13 @@ module.exports = function(config) {
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
+
+
+    webpack: webpackConfig,
+
+    webpackMiddleware: {
+      noInfo: true,
+    },
 
 
     // start these browsers
